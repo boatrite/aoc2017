@@ -15,4 +15,11 @@ defmodule AdventOfCode2017Test do
     assert AdventOfCode2017.day_1_pt_2("123123") == 12
     assert AdventOfCode2017.day_1_pt_2("12131415") == 4
   end
+
+  test "day 2 pt 1" do
+    matrix_str = "5 1 9 5
+    7 5 3
+    2 4 6 8"
+    assert AdventOfCode2017.day_2_pt_1(matrix_str) == 18
+  end
 end
