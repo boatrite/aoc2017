@@ -1,18 +1,21 @@
 defmodule AdventOfCode2017 do
 
-  def day_1(input) do
-    x = String.split(input, "") |>
-    Enum.reject(fn(x) -> x == "" end) |>
-    Enum.chunk_by(&(&1)) |>
-    Enum.filter(fn x -> length(x) > 1 end) |>
-    Enum.flat_map(&Enum.drop(&1, 1)) |>
-    Enum.map(&String.to_integer(&1)) |>
-    Enum.sum
+  def day_1_pt_1(input) do
+    day_1 input, 1
+  end
 
-    if String.at(input, 0) == String.at(input, -1) do
-      x + String.to_integer(String.at(input, 0))
-    else
-      x
-    end
+  def day_1_pt_2(input) do
+    step = String.length(input) / 2
+    day_1 input, step
+  end
+
+  defp day_1(input, step) do
+    arr = String.split(input, "") |>
+    Enum.reject(fn(el) -> el == "" end)
+
+    Enum.with_index(arr) |>
+    Enum.filter(fn({el, index}) -> el == Enum.at(arr, rem(round(index + step), length(arr))) end) |>
+    Enum.map(fn {el, _} -> String.to_integer(el) end) |>
+    Enum.sum
   end
 end
