@@ -1,24 +1,4 @@
-defmodule AdventOfCode2017 do
-
-  def day_1_pt_1(input) do
-    day_1 input, 1
-  end
-
-  def day_1_pt_2(input) do
-    step = String.length(input) / 2
-    day_1 input, step
-  end
-
-  defp day_1(input, step) do
-    arr = String.split(input, "") |>
-    Enum.reject(fn(el) -> el == "" end)
-
-    Enum.with_index(arr) |>
-    Enum.filter(fn({el, index}) -> el == Enum.at(arr, rem(round(index + step), length(arr))) end) |>
-    Enum.map(fn {el, _} -> String.to_integer(el) end) |>
-    Enum.sum
-  end
-
+defmodule Day2 do
   def day_2_pt_1(matrix_str) do
     String.split(matrix_str, "\n") |>
     Enum.map(&String.trim(&1)) |>
@@ -44,23 +24,6 @@ defmodule AdventOfCode2017 do
       Enum.at(pair, 1) / Enum.at(pair, 0)
     end)
     |> Enum.sum
-  end
-
-  # Brute force solution using Streams. I'm sure there's a constant time
-  # mathematical solution, but I can't think of it.
-  def day_3_pt_1(input) do
-    Stream.iterate(1, &(&1 + 2)) # 1, 3, 5, 7
-    |> Stream.map(&(&1 * &1)) # 1, 9, 25, 49
-    |> Stream.with_index # {1, 1}, {9, 2}, {25, 3}, {49, 4} The 2nd number is the box number.
-    |> Stream.filter(fn {box_max, _} -> input <= box_max end) # This tells us what box we're in.
-    |> Stream.map(fn {box_max, box_n} ->
-      axis_start = box_max - 7*box_n
-      0..3
-      |> Enum.map(fn i -> 2*box_n*i + axis_start end)
-      |> Enum.map(&(abs(input - &1) + box_n))
-      |> Enum.min
-    end)
-    |> Enum.at(0)
   end
 end
 
