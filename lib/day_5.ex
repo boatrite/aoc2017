@@ -8,7 +8,8 @@ defmodule Day5 do
       if jump_amount do
         next_instruction = instruction + jump_amount
         #next_jump_list = jump_list |> Enum.with_index |> Enum.map(fn {jmp, i} -> if i == instruction, do: jmp + 1, else: jmp end)
-        next_jump_list = jump_list |> Enum.with_index |> Enum.map(fn {jmp, i} -> if i == instruction, do: jmp + 1, else: jmp end)
+        next_jump_list = Enum.concat [Enum.slice(jump_list, 0, instruction), [Enum.at(jump_list, instruction) + 1], Enum.slice(jump_list, (instruction+1)..-1)]
+        #require IEx; IEx.pry
         next = {next_instruction, next_jump_list}
         {[:ok], next}
       else
@@ -26,13 +27,9 @@ defmodule Day5 do
       jump_amount = Enum.at(jump_list, instruction)
       if jump_amount do
         next_instruction = instruction + jump_amount
-        next_jump_list = jump_list |> Enum.with_index |> Enum.map(fn {jmp, i} ->
-          if i == instruction do
-            if jmp >= 3, do: jmp - 1, else: jmp + 1
-          else
-            jmp
-          end
-        end)
+        curr_val = Enum.at(jump_list, instruction)
+        next_val = if curr_val >= 3, do: curr_val - 1, else: curr_val + 1
+        next_jump_list = Enum.concat [Enum.slice(jump_list, 0, instruction), [next_val], Enum.slice(jump_list, (instruction+1)..-1)]
         next = {next_instruction, next_jump_list}
         {[:ok], next}
       else
