@@ -3,7 +3,7 @@ defmodule Day6 do
   def solve(input) do
     bank = String.split(input, ~r"\s")
            |> Enum.map(&String.to_integer/1)
-    # feel the jank
+           # feel the jank
     Stream.iterate(2, &(&1 + 1))
     |> Stream.transform({[bank], bank}, &transformer/2)
     |> Enum.to_list
@@ -17,6 +17,27 @@ defmodule Day6 do
     else
       next_all_banks = Enum.concat(all_banks, [next_bank])
       { [i], {next_all_banks, next_bank} }
+    end
+  end
+
+  def solve_pt_2(input) do
+    bank = String.split(input, ~r"\s")
+           |> Enum.map(&String.to_integer/1)
+    x = Stream.iterate(2, &(&1 + 1))
+        |> Stream.transform({[bank], bank}, &transformer_pt_2/2)
+        |> Enum.to_list
+    last = do_cycle Enum.at(x, -1)
+    index = Enum.find_index(x, &(&1 == last))
+    length(x) - index
+  end
+
+  def transformer_pt_2(i, {all_banks, curr_bank}) do
+    next_bank = do_cycle(curr_bank)
+    if Enum.member?(all_banks, next_bank) do
+      { :halt, :whatever }
+    else
+      next_all_banks = Enum.concat(all_banks, [next_bank])
+      { [next_bank], {next_all_banks, next_bank} }
     end
   end
 
