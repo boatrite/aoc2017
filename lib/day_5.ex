@@ -1,5 +1,10 @@
 defmodule Day5 do
 
+  # Keep the initial list always.
+  # Also keep track of how many times each number at the index has been incremented.
+  # Use the sum to know how many to jump ahead -- less mutation?
+  #
+  # What if I map the stream to a tuple containing the index to increment and the amount to increment by (pt 1 always 1)
   def solve(initial_jump_list) do
     # Streams probably aren't the best way to do this.
     Stream.iterate(0, &(&1 + 1))
@@ -9,7 +14,7 @@ defmodule Day5 do
         next_instruction = instruction + jump_amount
         #next_jump_list = jump_list |> Enum.with_index |> Enum.map(fn {jmp, i} -> if i == instruction, do: jmp + 1, else: jmp end)
         next_jump_list = Enum.concat [Enum.slice(jump_list, 0, instruction), [Enum.at(jump_list, instruction) + 1], Enum.slice(jump_list, (instruction+1)..-1)]
-        #require IEx; IEx.pry
+        require IEx; IEx.pry
         next = {next_instruction, next_jump_list}
         {[:ok], next}
       else
