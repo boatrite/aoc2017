@@ -17,7 +17,7 @@ ugml (68) -> gyxo, ebii, jptl
 gyxo (61)
 cntj (57)
 """
-    assert Day7.solve(input) == "tknk"
+    assert Day7.solve(input) == "tknk (41) -> ugml, padx, fwft"
 
     input = ~s"""
 occxa (60)
@@ -1242,6 +1242,25 @@ cblanil (197)
 anujsv (71)
 wkvfo (177) -> muaiipe, nctisdd, tdyqxhp
     """
-    assert Day7.solve(input) == "uownj"
+    assert Day7.solve(input) == "uownj (12) -> wqdviv, ctmydr, pxdnb, qipooo, aazgvmc, eidmwnu"
+  end
+
+  test "solve_pt_2" do
+    input = ~s"""
+pbga (66)
+xhth (57)
+ebii (61)
+havc (66)
+ktlj (57)
+fwft (72) -> ktlj, cntj, xhth
+qoyq (66)
+padx (45) -> pbga, havc, qoyq
+tknk (41) -> ugml, padx, fwft
+jptl (61)
+ugml (68) -> gyxo, ebii, jptl
+gyxo (61)
+cntj (57)
+"""
+    assert Day7.solve_pt_2(input) == 60
   end
 end
